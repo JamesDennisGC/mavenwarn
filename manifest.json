@@ -1,0 +1,12 @@
+{
+  "name": "Mavenlink Warning",
+  "version": "1.0",
+  "description": "Provide warning Mavenlink's post field that post will be public.",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["https://app.mavenlink.com/workspaces/*"],
+      "js": ["warn.js"]
+    }
+  ]
+}
