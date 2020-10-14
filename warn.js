@@ -6,38 +6,62 @@
  *
  * The following extension is intended for James Dennis only. it'sfreerealestate.
  *
- * TODO - detect public/private status of post, clear styles on private posts
  * TODO - implement change detection rather than looped timer
- * TODO - update btn styles
- * TODO - add icon
+ * TODO - update btn styles when public
+ * TODO - add icon to extension
  * TODO - build extension - build and src folder
+ * TODO - break up into functions
  */
 
 console.log("🦍 warnscript active 🦍");
 
+// Script variables
 const loopTime = 3000;
-const newPlaceholder = "🤠👆 Create new post...";
-const overrideElementClasses = "markdown_markdown-area__3s11P focus-target markdown-textarea sections_resizable__3HLQS sections_text-content__16ZYh";
 const warnColour = "#fff8f8";
+const warnText = "🤠👆";
 
-// Match full post input wrappers
-// const messageWrappers = document.getElementsByClassName("message-wrapper");
+// Constants and DOM match values
+const messageWrapperClass = "message-wrapper";
+const placeholderAttributeName = "placeholder";
+const privacyClass = "privacy";
+const publicTextValue = " Public";
+const textAreaElement = "TextArea";
+
+// Flags
+let isFirstIteration = true;
+
+// DOM retrieved vars
+let existingPlaceholder = undefined;
 
 /**
  * Recursive function to monitor page, match and override input attributes
  */
 const monitorPage = () => {
-    // Match Mavenlink input fields
-    const postFields = document.getElementsByClassName(overrideElementClasses);
+    // Retrieve all post input wrappers on page
+    const postWrappers = document.getElementsByClassName(messageWrapperClass);
 
-    // Update attributes of input fields
-    if (postFields && postFields.length) {
-        for (const postField of postFields) {
-            // postField.setAttribute('style', `background: ${warnColour};`);
-            postField.setAttribute('placeholder', newPlaceholder);
+    // Loop through retrieved post wrappers, check post status and update field if required
+    for (const postWrapper of postWrappers) {
+        // Retrieve required elements
+        const textArea = postWrapper.getElementsByTagName(textAreaElement)[0];
+        const privacyDiv = postWrapper.getElementsByClassName(privacyClass)[0];
+
+        // Assign existing input placeholder on first iteration of function
+        if (isFirstIteration) {
+            existingPlaceholder = textArea.placeholder;
+            isFirstIteration = false;
+        }
+
+        // Detect private or public status of post and update attributes accordingly
+        if (privacyDiv.innerText === publicTextValue) {
+            // textArea.setAttribute('style', `background: ${warnColour};`); // Update input background colour with warning colour
+            textArea.setAttribute(placeholderAttributeName, `${warnText} ${existingPlaceholder}`);
+        } else {
+            textArea.setAttribute(placeholderAttributeName, existingPlaceholder);
         }
     }
 
+    // Loop this function
     setTimeout(() => {
         monitorPage();
     }, loopTime);
