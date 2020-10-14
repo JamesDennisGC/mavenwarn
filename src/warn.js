@@ -8,7 +8,6 @@
  *
  * TODO - implement change detection rather than looped timer
  * TODO - update btn styles when public
- * TODO - add icon to extension
  * TODO - break up codebase into functions
  * TODO - implement user options and move script variables to user options
  */
