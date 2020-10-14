@@ -2,6 +2,11 @@
   "name": "Mavenlink Warning",
   "version": "1.0",
   "description": "Provide warning Mavenlink's post field that post will be public.",
+  "icons": {
+    "16": "icon/jim-16.png",
+    "48": "icon/jim-48.png",
+    "128": "icon/jim-128.png"
+  },
   "manifest_version": 2,
   "content_scripts": [
     {

@@ -9,8 +9,8 @@
  * TODO - implement change detection rather than looped timer
  * TODO - update btn styles when public
  * TODO - add icon to extension
- * TODO - build extension - build and src folder
- * TODO - break up into functions
+ * TODO - break up codebase into functions
+ * TODO - implement user options and move script variables to user options
  */
 
 console.log("🦍 warnscript active 🦍");
