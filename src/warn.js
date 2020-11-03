@@ -4,12 +4,13 @@
  * Override Mavenlink's input field placeholders and background value as a reminder to
  * double check the public/private input option when posting.
  *
- * The following extension is intended for James Dennis only. it'sfreerealestate.
+ * Add links to each post to enable sharing of posts externally.
  *
  * TODO - implement change detection rather than looped timer
  * TODO - update btn styles when public
  * TODO - break up codebase into functions
  * TODO - implement user options and move script variables to user options
+ * TODO - implement hyperlink on posts
  */
 
 console.log("🦍 warnscript active 🦍");
@@ -20,10 +21,13 @@ const warnColour = "#fff8f8";
 const warnText = "🤠👆";
 
 // Constants and DOM match values
+const dataPostId = "data-post-id";
+const listOfEvents = "list-of-events";
 const messageWrapperClass = "message-wrapper";
 const placeholderAttributeName = "placeholder";
 const privacyClass = "privacy";
 const publicTextValue = " Public";
+const showPostParam = "?show_post";
 const textAreaElement = "TextArea";
 
 // Flags
@@ -31,6 +35,33 @@ let isFirstIteration = true;
 
 // DOM retrieved vars
 let existingPlaceholder = undefined;
+
+/**
+ * Add hyperlinks to page posts
+ */
+const linkPosts = () => {
+    // todo clean pageUrl
+    const pageUrl = document.URL;
+    console.log(`url: ${pageUrl}`);
+
+    // Retrieve list of posts
+    const eventContainer = document.getElementById(listOfEvents);
+
+    // Check for and loop through posts
+    if (eventContainer && eventContainer.children) {
+        const eventList = eventContainer.children[0];
+        for (const event of eventList.children) {
+            // If event is post event and has an id
+            const postId = event.getAttribute(dataPostId);
+            if (postId) {
+                // Build link url
+                const postLink = pageUrl + showPostParam + postId;
+                // todo add link to post
+                console.log(postLink);
+            }
+        }
+    }
+}
 
 /**
  * Recursive function to monitor page, match and override input attributes
@@ -67,3 +98,4 @@ const monitorPage = () => {
 };
 
 monitorPage();
+linkPosts();
