@@ -41,7 +41,7 @@ let existingPlaceholder = undefined;
  */
 const linkPosts = () => {
     // Match workspace url with regex, ignore any extra url parameters
-    const urlRegex = /(https:\/\/)(.*)(workspaces\/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])/;
+    const urlRegex = /https:\/\/.*workspaces\/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/;
     const regexResults = urlRegex.exec(document.URL);
 
     // Guard page mismatch (non-workspace page)
