@@ -40,9 +40,17 @@ let existingPlaceholder = undefined;
  * Add hyperlinks to page posts
  */
 const linkPosts = () => {
-    // todo clean pageUrl
-    const pageUrl = document.URL;
-    console.log(`url: ${pageUrl}`);
+    // Match workspace url with regex, ignore any extra url parameters
+    const urlRegex = /(https:\/\/)(.*)(workspaces\/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])/;
+    const regexResults = urlRegex.exec(document.URL);
+
+    // Guard page mismatch (non-workspace page)
+    if (!regexResults || !regexResults.length) {
+        return;
+    }
+
+    // Take url from regex result
+    const cleanUrl = regexResults[0];
 
     // Retrieve list of posts
     const eventContainer = document.getElementById(listOfEvents);
@@ -55,7 +63,7 @@ const linkPosts = () => {
             const postId = event.getAttribute(dataPostId);
             if (postId) {
                 // Build link url
-                const postLink = pageUrl + showPostParam + postId;
+                const postLink = cleanUrl + showPostParam + postId;
                 // todo add link to post
                 console.log(postLink);
             }
